@@ -1,0 +1,16 @@
+#Add this alias to your-user .bashrc after save file sudo su your-user so the alias can be read by linux
+alias kubectl='microk8s kubectl'
+alias get='microk8s kubectl get'
+alias describe='microk8s kubectl describe'
+alias delete='microk8s kubectl delete'
+alias apply='microk8s kubectl apply'
+alias dashboard='microk8s dashboard-proxy'
+alias import='microk8s ctr image import'
+alias images='microk8s ctr image ls'
+alias prometheus='microk8s kubectl port-forward -n monitoring service/prometheus-k8s --address 0.0.0.0 9090:9090'
+alias grafana='microk8s kubectl port-forward -n monitoring service/grafana --address 0.0.0.0 3000:3000'
+
+#Add this if you had trouble with enable add-ons to your-user .bashrc
+export GIT_TRACE_PACKET=1
+export GIT_TRACE=1
+export GIT_CURL_VERBOSE=1
