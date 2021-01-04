@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-app
+spec:
+  volumes:
+    - name: your-volumes
+      hostPath:
+        path: /path/to/app/directory
+        type: Directory
+  selector:
+    matchLabels:
+      name: your-app
+  template:
+    metadata:
+      name: your-app
+      labels:
+        name: your-app
+    spec:
+      containers:
+        - name: your-app
+          image: your-imsges/public-images
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          volumeMounts:
+           - name: your-volumes
+             mountPath: /var/www/html/

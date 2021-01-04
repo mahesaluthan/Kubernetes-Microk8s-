@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: your-app
+spec:
+  selector:
+    matchLabels:
+      name: your-app
+  template:
+    metadata:
+      name: your-app
+      labels:
+        name: your-app
+    spec:
+      containers:
+        - name: your-app
+          image: your-images/public-image
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 200m
+          resources:
+            limits:
+              memory: 4096Mi
+            requests:
+              memory: 2046Mi
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: your-service
+spec:
+  type: LoadBalancer
+  selector:
+    name: your-app
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30001
+---
+
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: your-hpa
+spec:
+  minReplicas: 2
+  maxReplicas: 5
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: your-app
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 70

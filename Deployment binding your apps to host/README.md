@@ -1,0 +1,8 @@
+- Apply the deployment, don't apply the ingress
+- get to your server who have certbot
+- use certbot willcard
+- certbot certonly --manual --preferred-challenges dns --email your@mail.com --domains your.domains.com
+- follow the intructions from cerbot, read intructions with carefully
+- after all done you can transfer your domains ssl in /etc/letsencrypt/archive/your.domains.com to microk8s server
+- next you must create secret for your ssl with kubectl create secret tls your-secret --cert /path/to/your/path/of/fullchain.pem --key /path/to/your/path/of/privkey.pem
+- and that its now you can apply the ingress and check https://your.domains.com 
